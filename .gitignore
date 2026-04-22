@@ -18,12 +18,12 @@ build/
 backend/checkpoints/*.pth
 backend/checkpoints/*.pt
 
-# Datasets (too large for Git, download from Kaggle separately)
-backend/datasets/real/
-backend/data/
 
 # Database
 backend/data/*.db
+
+# Raw dataset backup (use datasets/real/ instead)
+backend/data/AffectNetCustom/
 
 # Logs
 backend/logs/
