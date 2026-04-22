@@ -5,51 +5,25 @@
 | 项目 | 要求 |
 |------|------|
 | AutoDL 实例 | 推荐 RTX 4090 / A100，镜像选 PyTorch 2.x + CUDA 12.x |
-| 本地项目 | `config-art-master/` 目录，含 `backend/datasets/real/`（已准备好的 7 类数据集） |
 | 浏览器 | Chrome / Edge（需支持 WebRTC 摄像头访问） |
 
 ---
 
-## 1. 上传项目到服务器
-
-### 方式一：打包上传
+## 1. 拉取项目
 
 ```bash
-# 本地打包（Windows Git Bash 或 WSL）
-cd C:\Users\你的用户名\config-art-master
-tar -czf emotion-project.tar.gz .
-
-# 通过 scp 上传
-scp -P <SSH端口> emotion-project.tar.gz root@<AutoDL-IP>:/root/autodl-tmp/
-```
-
-### 方式二：AutoDL 网盘上传
-
-1. AutoDL 控制台 → 文件存储 → 上传 `emotion-project.tar.gz`
-2. 或使用 JupyterLab 的上传功能
-
-### 方式三：Git 拉取
-
-```bash
-# 如果项目已推送到 Git 仓库
 ssh -p <SSH端口> root@<AutoDL-IP>
+
 cd /root/autodl-tmp
-git clone <仓库地址> emotion-project
+git clone https://github.com/linzzzuan/Art_ai_final.git emotion-project
+cd emotion-project
 ```
+
+> 仓库已包含完整代码 + 数据集（`backend/datasets/real/`，33,788 训练 + 2,799 验证），无需额外下载。
 
 ---
 
-## 2. 服务器端解压与目录结构
-
-```bash
-ssh -p <SSH端口> root@<AutoDL-IP>
-
-cd /root/autodl-tmp
-mkdir -p emotion-project && cd emotion-project
-tar xzf ../emotion-project.tar.gz
-```
-
-确认目录结构：
+## 2. 确认目录结构
 
 ```
 /root/autodl-tmp/emotion-project/
@@ -627,8 +601,10 @@ systemctl restart nginx
 从零开始的最简命令序列：
 
 ```bash
-# ① 上传解压
-cd /root/autodl-tmp/emotion-project
+# ① 拉取项目（含完整数据集）
+cd /root/autodl-tmp
+git clone https://github.com/linzzzuan/Art_ai_final.git emotion-project
+cd emotion-project
 
 # ② 修改配置
 vi backend/config.yaml
@@ -638,10 +614,12 @@ vi backend/config.yaml
 cd backend
 pip install fastapi uvicorn pydantic pyyaml opencv-python Pillow scikit-learn matplotlib gunicorn websockets
 cd ../frontend
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt install -y nodejs  # 如未安装 Node.js
 npm install
 
 # ④ 训练
 cd ../backend
+mkdir -p checkpoints experiments logs
 python train.py --dataset-path datasets/real --epochs 50 --batch-size 64 --task-name v1 --num-workers 4
 
 # ⑤ 构建前端
@@ -650,7 +628,8 @@ echo -e "VITE_API_BASE_URL=\nVITE_INFERENCE_MODE=http" > .env.production
 npm run build
 
 # ⑥ 配置 Nginx（见第 7 节）
-# ...
+apt install -y nginx
+# ... 写入配置文件，启用并重启
 
 # ⑦ 启动后端
 cd ../backend
