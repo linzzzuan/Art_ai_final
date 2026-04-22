@@ -1,0 +1,60 @@
+# ============================================================
+# .gitignore — Emotion Detection System
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Model weights (large files, managed independently)
+backend/checkpoints/*.pth
+backend/checkpoints/*.pt
+
+# Datasets (too large for Git, download from Kaggle separately)
+backend/datasets/real/
+backend/data/
+
+# Database
+backend/data/*.db
+
+# Logs
+backend/logs/
+logs/
+
+# Training experiments (generated at runtime)
+backend/experiments/*/
+
+# Node.js
+node_modules/
+frontend/node_modules/
+
+# Frontend build output
+frontend/dist/
+
+# Environment files (production generated dynamically)
+frontend/.env.production
+frontend/.env.production.local
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/

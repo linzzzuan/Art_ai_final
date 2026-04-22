@@ -1,0 +1,73 @@
+# ============================================================
+# config.yaml — 统一配置文件（本地/服务器共用）
+# ============================================================
+
+# 当前激活的环境: "local" | "server"
+active_profile: local
+
+profiles:
+  # ──────────── 本地开发环境 ────────────
+  local:
+    app:
+      host: "127.0.0.1"
+      port: 8000
+      debug: true
+      cors_origins: ["*"]
+
+    model:
+      device: "cpu"
+      checkpoint_path: "checkpoints/best_model.pth"
+      auto_download: false
+
+    dataset:
+      affectnet_path: "datasets/real"
+      mock_data_path: "datasets/mock"
+
+    database:
+      url: "sqlite:///./data/emotion.db"
+
+    training:
+      epochs: 2
+      batch_size: 8
+      use_mock: true
+
+    inference:
+      smoothing_window: 5
+      max_fps: 10
+
+    logging:
+      level: "DEBUG"
+      file: null
+
+  # ──────────── 服务器生产环境 ────────────
+  server:
+    app:
+      host: "0.0.0.0"
+      port: 8000
+      debug: false
+      cors_origins: ["https://your-domain.com"]
+
+    model:
+      device: "cuda"
+      checkpoint_path: "checkpoints/best_model.pth"
+      auto_download: false
+
+    dataset:
+      affectnet_path: "/mnt/affectnet/affectnet7"
+      mock_data_path: null
+
+    database:
+      url: "sqlite:///./data/emotion.db"
+
+    training:
+      epochs: 50
+      batch_size: 64
+      use_mock: false
+
+    inference:
+      smoothing_window: 5
+      max_fps: 30
+
+    logging:
+      level: "INFO"
+      file: "logs/app.log"

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install:*)",
+      "Bash(python -c \":*)",
+      "Bash(python:*)",
+      "Bash(ls:*)",
+      "Bash(cd:*)",
+      "Bash(npm create:*)",
+      "Bash(npx create-vite@5.5.0 . --template react-ts)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill //F //IM uvicorn.exe)",
+      "Bash(pkill -f \"uvicorn app.main\")",
+      "Bash(npm -v)",
+      "Bash(netstat -ano)",
+      "Bash(xargs -I{} taskkill //PID {} //F)",
+      "Bash(rm -f /tmp/test_inference.json)",
+      "Bash(chmod:*)",
+      "Bash(pip show:*)",
+      "Bash(unzip -q \"D:/user/01454224/Downloads/archive.zip\" -d C:/Users/01454224/config-art-master/backend/datasets/affectnet_aligned)",
+      "Bash(cp:*)"
+    ]
+  }
+}
